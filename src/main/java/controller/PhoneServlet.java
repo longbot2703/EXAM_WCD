@@ -12,13 +12,20 @@ import java.io.IOException;
 
 @WebServlet(name = "PhoneServlet", urlPatterns = {"/phone"})
 public class PhoneServlet extends HttpServlet {
+
+    PhoneDao dao = new PhoneDao();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PhoneDao dao = new PhoneDao();
-        int id = Integer.parseInt(request.getParameter("id"));
-        PhoneEntity phone = dao.findProduct(id);
+        PhoneEntity p = new PhoneEntity();
+        p.setName(request.getParameter("name"));
+        p.setBrand(request.getParameter("brand"));
+        p.setDescription(request.getParameter("description"));
+
+        dao.insertPhone(p);
+        doGet(request,response);
     }
 }
